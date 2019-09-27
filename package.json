@@ -1,0 +1,21 @@
+{
+  "name": "evpsl-app",
+  "version": "1.0.0",
+  "description": "A node koa app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "NODE_PATH=src node index.js"
+  },
+  "author": "Darren King",
+  "license": "ISC",
+  "dependencies": {
+    "jsonwebtoken": "^8.5.1",
+    "koa": "^2.3.0",
+    "koa-bodyparser": "^4.2.0",
+    "koa-morgan": "^1.0.1",
+    "koa-response-time": "^2.0.0",
+    "koa-router": "^7.2.1",
+    "mongoose": "^4.12.1"
+  }
+}
