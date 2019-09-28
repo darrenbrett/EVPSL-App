@@ -13,7 +13,17 @@ const UserSchema = new Schema({
   createdOn: {
     type: Date,
     default: Date.now
-  }
+  },
+  password: {
+    type: String,
+    required: true,
+    trim: true
+  },
+  tokens: [{
+    token: {
+      type: String
+    }
+  }]
 });
 
 const User = mongoose.model('User', UserSchema);

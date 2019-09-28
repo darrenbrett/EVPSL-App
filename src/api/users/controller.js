@@ -1,12 +1,26 @@
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+
+const config = require('./../../configuration');
 const User = require('./model');
 
+const secretKey = config.get('SECRET_KEY');
+
+// Gets all records
 exports.getAll = async () => {
   return User.find();
 };
 
+// Creates a new record
 exports.create = async ({
   data = {}
 } = {}) => {
+  console.log('data: ', data);
+  if (data.password) {
+    let password = data.password;
+    let hashedPassword = await createHashedPassword(password);
+    data.password = hashedPassword;
+  }
   return User.create(data);
 };
 
@@ -20,4 +34,64 @@ exports.getById = async (ctx) => {
     _id: id
   }).lean().exec();
   return user;
+};
+
+// Hashes user password for storage in db
+createHashedPassword = async (password) => {
+  let hashedPassword = await bcrypt.hash(password, 8);
+  return hashedPassword;
+};
+
+// Checks to see if password matches with db password
+doesPasswordMatch = async (username, password) => {
+  const user = await User.findOne({
+    username
+  }).lean().exec();
+  if (!user) {
+    console.log('Not able to find user');
+    return;
+  }
+  let dbPassword = user.password;
+  const isMatch = await bcrypt.compare(password, dbPassword);
+  if (isMatch) {
+    return true;
+  }
+};
+
+// Logs in user if credentials match db
+exports.getByLogin = async (ctx) => {
+  const {
+    username,
+    password
+  } = ctx.request.body;
+  if (!username || !password) {
+    console.log('username and password required.');
+    return ctx.response.status = 404;
+  }
+  let isPasswordCorrect = await doesPasswordMatch(username, password);
+  if (!isPasswordCorrect) {
+    // return ctx.response.status.body = "Authentication failed.";
+    return ctx.response.status = 404;
+  }
+  let user = await User.findOne({
+    username: username
+  }).exec();
+  let newToken = await signNewToken(user);
+  user.tokens.push({
+    token: newToken
+  });
+  await user.save();
+  console.log(`User ${user._id} just successfully logged in.`);
+  return user;
+};
+
+// Signs a new token for the user
+signNewToken = (user) => {
+  let secretKey = 'oneup';
+  let token = jwt.sign({
+    user: user
+  }, secretKey, {
+    expiresIn: 86400 // expires in 24 hours
+  });
+  return token;
 };

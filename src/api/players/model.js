@@ -17,6 +17,18 @@ const PlayerSchema = new Schema({
   createdOn: {
     type: Date,
     default: Date.now
+  },
+  age: {
+    type: Number
+  },
+  birthdate: {
+    type: Date
+  },
+  height: {
+    type: Number
+  },
+  weight: {
+    type: Number
   }
 });
 

@@ -1,4 +1,5 @@
 {
   "MONGO_DATABASE_NAME": "evpsl",
-  "MONGO_URL": "mongodb://localhost:27017"
+  "MONGO_URL": "mongodb://localhost:27017",
+  "SECRET_KEY": "fjdjeid83d"
 }

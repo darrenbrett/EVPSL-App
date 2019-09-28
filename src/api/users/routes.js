@@ -1,4 +1,5 @@
 const router = require('koa-router')();
+
 const controller = require('./controller');
 
 // Get a single user's record
@@ -19,6 +20,11 @@ router.post('/', async ctx => {
   const user = await controller.create({
     data
   });
+  ctx.body = user;
+});
+
+router.post('/login', async ctx => {
+  const user = await controller.getByLogin(ctx);
   ctx.body = user;
 });
 
