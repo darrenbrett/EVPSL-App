@@ -19,4 +19,9 @@ router.post('/', async ctx => {
   ctx.body = team;
 });
 
+router.post('/update', async ctx => {
+  const game = await controller.update(ctx);
+  ctx.body = game;
+});
+
 module.exports = router.routes();

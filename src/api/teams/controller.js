@@ -23,3 +23,16 @@ exports.create = async ({
 } = {}) => {
   return Team.create(data);
 };
+
+// Updates an individual team record
+exports.update = async (ctx) => {
+  const {
+    id
+  } = ctx.request.query;
+  let update = ctx.request.body;
+  if (!id) return;
+  let updatedTeam = await Team.findByIdAndUpdate(id, update, {
+    new: true
+  }).exec();
+  return updatedTeam;
+};

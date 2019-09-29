@@ -23,4 +23,10 @@ router.post('/', async ctx => {
   ctx.body = team;
 });
 
+// Update a team record
+router.post('/update', async ctx => {
+  const team = await controller.update(ctx);
+  ctx.body = team;
+});
+
 module.exports = router.routes();

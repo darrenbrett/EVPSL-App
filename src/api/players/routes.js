@@ -27,11 +27,8 @@ router.post('/', async ctx => {
 });
 
 // Update a player record
-router.put('/', async ctx => {
-  const data = ctx.request.body;
-  const player = await controller.update({
-    data
-  });
+router.post('/update', async ctx => {
+  const player = await controller.update(ctx);
   ctx.body = player;
 });
 

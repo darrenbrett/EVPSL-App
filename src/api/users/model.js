@@ -10,6 +10,16 @@ const UserSchema = new Schema({
     trim: true,
     // unique: true
   },
+  name: {
+    first: {
+      type: String,
+      trim: true
+    },
+    last: {
+      type: String,
+      trim: true
+    }
+  },
   createdOn: {
     type: Date,
     default: Date.now
@@ -23,7 +33,11 @@ const UserSchema = new Schema({
     token: {
       type: String
     }
-  }]
+  }],
+  type: {
+    type: String,
+    enum: ['owner', 'admin', 'observer']
+  }
 });
 
 const User = mongoose.model('User', UserSchema);

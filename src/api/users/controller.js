@@ -24,6 +24,19 @@ exports.create = async ({
   return User.create(data);
 };
 
+// Updates an individual user record
+exports.update = async (ctx) => {
+  const {
+    id
+  } = ctx.request.query;
+  let update = ctx.request.body;
+  if (!id) return;
+  let updatedUser = await User.findByIdAndUpdate(id, update, {
+    new: true
+  }).exec();
+  return updatedUser;
+};
+
 // Get an individual user record
 exports.getById = async (ctx) => {
   const {

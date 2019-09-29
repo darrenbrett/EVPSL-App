@@ -12,6 +12,19 @@ exports.create = async ({
   return Player.create(data);
 };
 
+// Updates an individual player record
+exports.update = async (ctx) => {
+  const {
+    id
+  } = ctx.request.query;
+  let update = ctx.request.body;
+  if (!id) return;
+  let updatedPlayer = await Player.findByIdAndUpdate(id, update, {
+    new: true
+  }).exec();
+  return updatedPlayer;
+};
+
 // Get an individual player record
 exports.getById = async (ctx) => {
   const {
@@ -22,15 +35,4 @@ exports.getById = async (ctx) => {
     _id: id
   }).lean().exec();
   return player;
-};
-
-// Update a player record
-exports.update = async (ctx) => {
-  const {
-    id
-  } = ctx.request.query;
-  let updatedPlayer = await Player.update({
-    _id: id
-  });
-  return updatedPlayer;
 };

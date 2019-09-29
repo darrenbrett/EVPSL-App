@@ -56,3 +56,28 @@ exports.create = async ({
 } = {}) => {
   return Game.create(data);
 };
+
+// Updates an individual game record
+exports.update = async (ctx) => {
+  const {
+    id
+  } = ctx.request.query;
+  let update = ctx.request.body;
+  if (!id) return;
+  let updatedGame = await Game.findByIdAndUpdate(id, update, {
+    new: true
+  }).exec();
+  return updatedGame;
+};
+
+// Get an individual game record
+exports.getById = async (ctx) => {
+  const {
+    id
+  } = ctx.request.query;
+  if (!id) return;
+  let user = await Game.findOne({
+    _id: id
+  }).lean().exec();
+  return user;
+};

@@ -4,15 +4,17 @@ const {
 } = require('mongoose');
 
 const PlayerSchema = new Schema({
-  firstName: {
-    type: String,
-    required: true,
-    trim: true
-  },
-  lastName: {
-    type: String,
-    required: true,
-    trim: true
+  name: {
+    first: {
+      type: String,
+      trim: true,
+      required: true
+    },
+    last: {
+      type: String,
+      trim: true,
+      required: true
+    }
   },
   createdOn: {
     type: Date,
