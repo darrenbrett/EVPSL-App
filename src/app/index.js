@@ -4,13 +4,34 @@ const bodyparser = require('koa-bodyparser');
 const logger = require('koa-morgan');
 const responseTime = require('koa-response-time');
 const database = require('../database');
-const jwt = require('koa-jwt');
 
 const app = new Koa();
 app.use(async (ctx, next) => {
-  console.log('my middlware firing!!!');
+  console.log('my middlware firing!!!', ctx.req.url);
   await next();
 });
+app.use(async (ctx, next) => {
+  console.log('Number 2 firing...');
+  await next();
+});
+app.use(async (ctx, next) => {
+  console.log('Number 3 firing...');
+  await next();
+});
+app.use(async (ctx, next) => {
+  const start = Date.now();
+  await next(); // your API logic
+  const ms = Date.now() - start;
+  console.log(`API response time: ${ms} ms.`);
+});
+// app.use(async (ctx, next) => {
+//   if (ctx.url === `/teams`) {
+//     console.log('STOP PROCESS!!!');
+//     return;
+//   }
+//   await next();
+// });
+
 app.use(responseTime());
 app.use(logger('combined'));
 app.use(bodyparser());
