@@ -2,7 +2,8 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 const User = require('./model');
-const verificationKey = require('./../../configuration/authConfig');
+const authCreds = require('./../../configuration/authConfig.json');
+const verificationKey = authCreds.key;
 
 // Gets all records
 exports.getAll = async () => {

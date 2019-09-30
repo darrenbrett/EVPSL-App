@@ -22,7 +22,7 @@ app.use(async (ctx, next) => {
 // Authentication
 app.use(async (ctx, next) => {
   console.log('ctx.url: ', ctx.url);
-  if (ctx.url.includes('api') && (!ctx.url.includes('login')) && (!ctx.url.includes('create'))) {
+  if (!ctx.url.includes('login') && (!ctx.url.includes('create'))) {
     const authHeader = ctx.req.headers.authorization;
     console.log('authHeader: ', authHeader);
     if (!authHeader) {
