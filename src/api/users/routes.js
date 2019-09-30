@@ -1,12 +1,11 @@
 const router = require('koa-router')();
 
 const controller = require('./controller');
+const auth = require('./../../middleware/auth');
 
 // Get a single user's record
 router.get('/get-by-id', async ctx => {
-  console.log('user route firing...');
   const user = await controller.getById(ctx);
-  console.log('user: ', user);
   ctx.body = user;
 });
 
@@ -24,7 +23,7 @@ router.post('/', async ctx => {
 });
 
 router.post('/login', async ctx => {
-  const user = await controller.getByLogin(ctx);
+  const user = await controller.getByCredentials(ctx);
   ctx.body = user;
 });
 

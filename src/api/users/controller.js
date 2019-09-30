@@ -21,7 +21,17 @@ exports.create = async ({
     let hashedPassword = await createHashedPassword(password);
     data.password = hashedPassword;
   }
-  return User.create(data);
+  let user = await User.create(data);
+  const token = generateAuthToken(user._id);
+  user.tokens.push({
+    token: token
+  });
+  await user.save();
+  return {
+    user,
+    token
+  };
+
 };
 
 // Updates an individual user record
@@ -72,7 +82,7 @@ doesPasswordMatch = async (username, password) => {
 };
 
 // Logs in user if credentials match db
-exports.getByLogin = async (ctx) => {
+exports.getByCredentials = async (ctx) => {
   const {
     username,
     password
@@ -89,20 +99,23 @@ exports.getByLogin = async (ctx) => {
   let user = await User.findOne({
     username: username
   }).exec();
-  let newToken = await signNewToken(user);
+  let token = await generateAuthToken(user._id);
   user.tokens.push({
-    token: newToken
+    token: token
   });
   await user.save();
   console.log(`User ${user._id} just successfully logged in.`);
-  return user;
+  return {
+    user,
+    token
+  };
 };
 
 // Signs a new token for the user
-signNewToken = (user) => {
+generateAuthToken = (userId) => {
   let secretKey = 'oneup';
   let token = jwt.sign({
-    user: user
+    user: userId.toString()
   }, secretKey, {
     expiresIn: 86400 // expires in 24 hours
   });

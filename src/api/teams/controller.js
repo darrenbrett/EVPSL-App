@@ -7,6 +7,7 @@ exports.getAll = async () => {
 
 // Get a specific team
 exports.getById = async (ctx) => {
+  console.log('ctx.state: ', ctx.state);
   const {
     id
   } = ctx.request.query;
