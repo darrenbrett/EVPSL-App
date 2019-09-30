@@ -7,6 +7,7 @@ const responseTime = require('koa-response-time');
 
 const database = require('../database');
 const User = require('./../api/users/model');
+const verificationKey = require('./../configuration/authConfig');
 
 const app = new Koa();
 
@@ -35,7 +36,7 @@ app.use(async (ctx, next) => {
     console.log(token);
 
     try {
-      const decoded = jwt.verify(token, 'oneup');
+      const decoded = jwt.verify(token, verificationKey);
       console.log('decoded: ', decoded);
       const user = User.findOne({
         _id: decoded._id,

@@ -1,10 +1,8 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-const config = require('./../../configuration');
 const User = require('./model');
-
-const secretKey = config.get('SECRET_KEY');
+const verificationKey = require('./../../configuration/authConfig');
 
 // Gets all records
 exports.getAll = async () => {
@@ -113,7 +111,7 @@ exports.getByCredentials = async (ctx) => {
 
 // Signs a new token for the user
 generateAuthToken = (userId) => {
-  let secretKey = 'oneup';
+  let secretKey = verificationKey;
   let token = jwt.sign({
     user: userId.toString()
   }, secretKey, {
