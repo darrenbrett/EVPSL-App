@@ -1,9 +1,12 @@
 const Koa = require('koa');
+const jwt = require('jsonwebtoken');
 const router = require('./../routing');
 const bodyparser = require('koa-bodyparser');
 const logger = require('koa-morgan');
 const responseTime = require('koa-response-time');
+
 const database = require('../database');
+const User = require('./../api/users/model');
 
 const app = new Koa();
 app.use(async (ctx, next) => {
@@ -15,14 +18,36 @@ app.use(async (ctx, next) => {
 app.use(async (ctx, next) => {
   if (ctx.url.includes('api') && (!ctx.url.includes('login')) && (!ctx.url.includes('create'))) {
     const authHeader = ctx.req.headers.authorization;
+    console.log('authHeader: ', authHeader);
     if (!authHeader) {
       console.log('No auth header provided.');
       return;
     }
-    let token = authHeader.replace("Bearer", "").trim();
+    let token = authHeader.replace("Bearer ", "").trim();
+    if (!token) {
+      console.log('No token found.');
+    }
     console.log(token);
+
+    try {
+      const decoded = jwt.verify(token, 'oneup');
+      console.log('decoded: ', decoded);
+      const user = User.findOne({
+        _id: decoded._id,
+        'tokens.token': token
+      });
+      if (!user) {
+        throw new Error();
+      }
+      ctx.res.user = user._id;
+      await next();
+    } catch (error) {
+      console.log(error);
+      ctx.res.body = "Please authenticate.";
+    }
+  } else if ((ctx.url.includes('login') || (ctx.url.includes('create')))) {
+    await next();
   }
-  await next();
 });
 
 app.use(responseTime());
