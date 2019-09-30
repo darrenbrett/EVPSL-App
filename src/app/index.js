@@ -7,30 +7,23 @@ const database = require('../database');
 
 const app = new Koa();
 app.use(async (ctx, next) => {
-  console.log('my middlware firing!!!', ctx.req.url);
-  await next();
-});
-app.use(async (ctx, next) => {
-  console.log('Number 2 firing...');
-  await next();
-});
-app.use(async (ctx, next) => {
-  console.log('Number 3 firing...');
-  await next();
-});
-app.use(async (ctx, next) => {
   const start = Date.now();
   await next(); // your API logic
   const ms = Date.now() - start;
   console.log(`API response time: ${ms} ms.`);
 });
-// app.use(async (ctx, next) => {
-//   if (ctx.url === `/teams`) {
-//     console.log('STOP PROCESS!!!');
-//     return;
-//   }
-//   await next();
-// });
+app.use(async (ctx, next) => {
+  if (ctx.url.includes('api') && (!ctx.url.includes('login')) && (!ctx.url.includes('create'))) {
+    const authHeader = ctx.req.headers.authorization;
+    if (!authHeader) {
+      console.log('No auth header provided.');
+      return;
+    }
+    let token = authHeader.replace("Bearer", "").trim();
+    console.log(token);
+  }
+  await next();
+});
 
 app.use(responseTime());
 app.use(logger('combined'));
