@@ -9,13 +9,18 @@ const database = require('../database');
 const User = require('./../api/users/model');
 
 const app = new Koa();
+
+// Log response time of calls
 app.use(async (ctx, next) => {
   const start = Date.now();
   await next(); // your API logic
   const ms = Date.now() - start;
   console.log(`API response time: ${ms} ms.`);
 });
+
+// Authentication
 app.use(async (ctx, next) => {
+  console.log('ctx.url: ', ctx.url);
   if (ctx.url.includes('api') && (!ctx.url.includes('login')) && (!ctx.url.includes('create'))) {
     const authHeader = ctx.req.headers.authorization;
     console.log('authHeader: ', authHeader);
@@ -45,7 +50,8 @@ app.use(async (ctx, next) => {
       console.log(error);
       ctx.res.body = "Please authenticate.";
     }
-  } else if ((ctx.url.includes('login') || (ctx.url.includes('create')))) {
+  } else if ((ctx.url.includes('login')) || (ctx.url.includes('create'))) {
+    console.log('Login or create API call triggered...');
     await next();
   }
 });

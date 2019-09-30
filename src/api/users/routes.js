@@ -14,6 +14,7 @@ router.get('/', async ctx => {
 });
 
 router.post('/create', async ctx => {
+  console.log('create called...');
   const data = ctx.request.body;
   const user = await controller.create({
     data
