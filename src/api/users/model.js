@@ -37,6 +37,9 @@ const UserSchema = new Schema({
   type: {
     type: String,
     enum: ['owner', 'admin', 'observer']
+  },
+  active: {
+    type: Boolean
   }
 });
 

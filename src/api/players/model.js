@@ -31,6 +31,9 @@ const PlayerSchema = new Schema({
   },
   weight: {
     type: Number
+  },
+  active: {
+    type: Boolean
   }
 });
 
