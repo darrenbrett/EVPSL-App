@@ -27,6 +27,11 @@ router.post('/login', async ctx => {
   ctx.body = user;
 });
 
+router.post('/logout', async ctx => {
+  const user = await controller.logout(ctx);
+  ctx.body = user;
+});
+
 router.post('/update', async ctx => {
   const user = await controller.update(ctx);
   ctx.body = user;

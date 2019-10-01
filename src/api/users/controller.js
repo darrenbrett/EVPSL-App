@@ -2,8 +2,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 const User = require('./model');
-const authCreds = require('./../../configuration/authConfig.json');
-const verificationKey = authCreds.key;
+const verificationKey = require('./../../configuration/authConfig');
 
 // Gets all records
 exports.getAll = async () => {
@@ -81,7 +80,7 @@ doesPasswordMatch = async (username, password) => {
 };
 
 // Logs in user if credentials match db
-exports.getByCredentials = async (ctx) => {
+exports.getByCredentials = async ctx => {
   const {
     username,
     password
@@ -110,13 +109,32 @@ exports.getByCredentials = async (ctx) => {
   };
 };
 
+// Logout a user out of a session
+exports.logout = async (ctx) => {
+  try {
+    const user = ctx.req.user;
+    console.log('username: ', user.username);
+    console.log('user.tokens.length before: ', user.tokens.length);
+    user.tokens = user.tokens.filter((token) => {
+      return token.token !== ctx.req.token;
+    });
+    console.log('user.tokens.length after: ', user.tokens.length);
+    await user.save();
+    console.log(`User ${user._id} just logged out.`);
+    return user;
+  } catch (error) {
+    console.log('Error: ', error);
+  }
+};
+
 // Signs a new token for the user
 generateAuthToken = (userId) => {
   let secretKey = verificationKey;
   let token = jwt.sign({
     user: userId.toString()
   }, secretKey, {
-    expiresIn: 86400 // expires in 24 hours
+    // expiresIn: 86400 // expires in 24 hours
+    expiresIn: 60 // expires in 1 minute
   });
   return token;
 };
