@@ -26,9 +26,14 @@ module.exports = routeAuth = async (ctx, authHeader, next) => {
       return;
     }
 
-    const user = await User.findById(decoded.user).exec();
+    const user = await User.findOne({
+      _id: decoded.user,
+      'tokens.token': token
+    }).exec();
+
     if (!user) {
-      throw new Error();
+      console.log('Unable to verify user.');
+      return;
     }
     ctx.req.user = user;
     ctx.req.token = token;
