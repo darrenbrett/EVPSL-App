@@ -26,8 +26,7 @@ app.use(async (ctx, next) => {
       console.log('No auth header provided.');
       return;
     }
-    await routeAuth(ctx, authHeader);
-    await next();
+    await routeAuth(ctx, authHeader, next);
   } else if ((ctx.url.includes('login')) || (ctx.url.includes('create'))) {
     console.log('Login or create API call triggered...');
     await next();
