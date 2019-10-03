@@ -9,15 +9,13 @@ module.exports = routeAuth = async (ctx, authHeader, next) => {
     console.log('No token found.');
     return;
   }
-  console.log(token);
 
   try {
     const decoded = jwt.verify(token, verificationKey.toString(), (err, decoded) => {
       if (err) {
-        console.log('ERR! 46: ', err);
+        console.log('ERROR: ', err);
         return;
       }
-      console.log('decoded 49: ', decoded);
       return decoded;
     });
 

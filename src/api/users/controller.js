@@ -13,10 +13,9 @@ exports.getAll = async () => {
 exports.create = async ({
   data = {}
 } = {}) => {
-  console.log('data: ', data);
   if (data.password) {
-    let password = data.password;
-    let hashedPassword = await createHashedPassword(password);
+    const password = data.password;
+    const hashedPassword = await createHashedPassword(password);
     data.password = hashedPassword;
   }
   let user = await User.create(data);
@@ -37,9 +36,9 @@ exports.update = async (ctx) => {
   const {
     id
   } = ctx.request.query;
-  let update = ctx.request.body;
+  const update = ctx.request.body;
   if (!id) return;
-  let updatedUser = await User.findByIdAndUpdate(id, update, {
+  const updatedUser = await User.findByIdAndUpdate(id, update, {
     new: true
   }).exec();
   return updatedUser;
@@ -133,8 +132,7 @@ generateAuthToken = (userId) => {
   let token = jwt.sign({
     user: userId.toString()
   }, secretKey, {
-    // expiresIn: 86400 // expires in 24 hours
-    expiresIn: 60 // expires in 1 minute
+    expiresIn: 86400 // expires in 24 hours
   });
   return token;
 };

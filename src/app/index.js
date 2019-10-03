@@ -18,10 +18,8 @@ app.use(async (ctx, next) => {
 
 // Authentication
 app.use(async (ctx, next) => {
-  console.log('ctx.url: ', ctx.url);
   if (!ctx.url.includes('login') && (!ctx.url.includes('create'))) {
     const authHeader = ctx.req.headers.authorization;
-    console.log('authHeader: ', authHeader);
     if (!authHeader) {
       console.log('No auth header provided.');
       return;
