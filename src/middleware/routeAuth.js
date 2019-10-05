@@ -14,13 +14,17 @@ module.exports = routeAuth = async (ctx, authHeader, next) => {
     const decoded = jwt.verify(token, verificationKey.toString(), (err, decoded) => {
       if (err) {
         console.log('ERROR: ', err);
+        ctx.response.status = 403;
+        ctx.response.body = "Authentication failed.";
         return;
       }
       return decoded;
     });
 
     if (!decoded) {
-      console.log('Verification failed.');
+      console.log('Authentication failed.');
+      ctx.response.status = 403;
+      ctx.response.body = "Authentication failed.";
       return;
     }
 

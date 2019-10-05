@@ -2,7 +2,7 @@ const Game = require('./model');
 
 // Get all games across time
 exports.getAll = async () => {
-  return Games.find();
+  return Game.find();
 };
 
 // Get all games from a specific regular season
@@ -12,8 +12,23 @@ exports.getAllByYear = async (ctx) => {
     ctx.response.status = 404;
     return "You must provide a year to filter by.";
   }
-  return Games.find({
+  return Game.find({
     seasonYear: year
+  });
+};
+
+// Get all games from a specific regular season
+exports.getGamesByRound = async (ctx) => {
+  console.log('firing getGamesByRound - query: ', ctx.request.query);
+  const {
+    round
+  } = ctx.request.query;
+  if (!round) {
+    ctx.response.status = 404;
+    return "You must provide a round to filter by.";
+  }
+  return Game.find({
+    round
   });
 };
 
@@ -23,7 +38,7 @@ exports.getScoresByRound = async (ctx) => {
     year,
     round
   } = ctx.request.params;
-  return Games.find({
+  return Game.find({
     year,
     round
   });
@@ -37,7 +52,7 @@ exports.getScore = async (ctx) => {
     homeTeam,
     awayTeam
   } = ctx.request.params;
-  return Games.find({
+  return Game.find({
     year,
     round,
     homeTeam,
