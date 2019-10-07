@@ -6,9 +6,11 @@ exports.getAll = async () => {
 };
 
 // Create a player record
-exports.create = async ({
-  data = {}
-} = {}) => {
+exports.add = async ({
+  data
+}) => {
+  console.log('player.create() is firing...');
+  console.log('data: ', data);
   return Player.create(data);
 };
 

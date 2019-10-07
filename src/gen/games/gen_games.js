@@ -33,25 +33,25 @@ function genScore(awayTeam, homeTeam) {
   for (let teamStrength of teamStrengths) {
     if (teamStrength.name === homeTeam) {
       homeTeamRating = teamStrength.rating;
-      console.log("home strength: ", homeTeam, homeTeamRating);
+      // console.log("home strength: ", homeTeam, homeTeamRating);
     }
     if (teamStrength.name === awayTeam) {
       awayTeamRating = teamStrength.rating;
-      console.log("away strength: ", awayTeam, awayTeamRating);
+      // console.log("away strength: ", awayTeam, awayTeamRating);
     }
   }
 
   // Get initial home team goals
   let homeTeamInitResult = getGoalsScored();
-  console.log('homeTeamInitResult: ', homeTeamInitResult);
+  // console.log('homeTeamInitResult: ', homeTeamInitResult);
 
   // Add in home field advantage
   homeTeamInitResult = homeTeamInitResult + 0.35;
-  console.log('homeTeamInitResult after advantage added: ', homeTeamInitResult);
+  // console.log('homeTeamInitResult after advantage added: ', homeTeamInitResult);
 
   // Get intial away team goals
   let awayTeamInitResult = getGoalsScored();
-  console.log('awayTeamResult: ', awayTeamInitResult);
+  // console.log('awayTeamResult: ', awayTeamInitResult);
 
   // Calculate mod by strength rating
   let homeResultModByStrength = (homeTeamInitResult * homeTeamRating * 0.7) / 10;
@@ -59,9 +59,9 @@ function genScore(awayTeam, homeTeam) {
 
   // Calculate scores moderated by strength
   let awayModScore = awayTeamInitResult + awayResultModByStrength;
-  console.log("awayModScore: ", awayModScore);
+  // console.log("awayModScore: ", awayModScore);
   let homeModScore = homeTeamInitResult + homeResultModByStrength;
-  console.log("homeModScore: ", homeModScore);
+  // console.log("homeModScore: ", homeModScore);
 
   // Round scores to nearest integer
   let finalHomeScore = Math.round(homeModScore);
@@ -158,4 +158,4 @@ const getTotalsEquallyMatched = () => {
 // getTotalsStrongHomeWeakAway();
 // getTotalsEquallyMatched();
 
-genScore("Aventura", "Westingdon");
+genScore("Argonia", "Sanviago");

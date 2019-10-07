@@ -20,7 +20,7 @@ router.get('/', async ctx => {
 router.post('/', async ctx => {
   const data = ctx.request.body;
   console.log('data: ', data);
-  const player = await controller.create({
+  const player = await controller.add({
     data
   });
   ctx.body = player;

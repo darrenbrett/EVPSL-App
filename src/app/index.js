@@ -22,6 +22,8 @@ app.use(async (ctx, next) => {
     const authHeader = ctx.req.headers.authorization;
     if (!authHeader) {
       console.log('No auth header provided.');
+      ctx.response.status = 403;
+      ctx.response.body = "Authentication failed.";
       return;
     }
     await routeAuth(ctx, authHeader, next);
