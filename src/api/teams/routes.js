@@ -29,4 +29,15 @@ router.post('/update', async ctx => {
   ctx.body = team;
 });
 
+// Get agg players score
+router.get('/agg-players-score', async ctx => {
+  const teamPlayersScore = await controller.getPlayersAggScore(ctx);
+  ctx.body = teamPlayersScore;
+});
+
+router.get('/all-team-player-scores', async ctx => {
+  const allTeamPlayerScores = await controller.getAllTeamPlayerAggScores(ctx);
+  ctx.body = allTeamPlayerScores;
+});
+
 module.exports = router.routes();

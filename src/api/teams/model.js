@@ -59,6 +59,12 @@ const TeamSchema = new Schema({
   },
   firstSeason: {
     type: String
+  },
+  playersAggScore: {
+    type: Number
+  },
+  teamScore: {
+    type: Number
   }
 });
 

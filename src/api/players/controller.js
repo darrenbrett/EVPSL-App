@@ -1,3 +1,5 @@
+'use script';
+
 const Player = require('./model');
 
 // Get all players
@@ -37,4 +39,26 @@ exports.getById = async (ctx) => {
     _id: id
   }).lean().exec();
   return player;
+};
+
+exports.getPlayersTeamScore = async (ctx) => {
+  let teamPlayerScores = [];
+  const {
+    team
+  } = ctx.request.query;
+  if (!team) return;
+
+  // Get all player docs for a given team
+  const teamPlayers = await Player.find({
+    currentTeam: team
+  });
+
+  teamPlayerScores = teamPlayers.map(player => player.aggScore);
+
+  let aggPlayerTeamScore = teamPlayerScores.reduce(
+    (accumulator, currentValue) => accumulator + currentValue,
+    0
+  );
+
+  console.log('aggPlayerTeamScore: ', aggPlayerTeamScore);
 };

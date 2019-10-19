@@ -66,7 +66,7 @@ const genHeightAndWeight = async () => {
 
   height = initialHeight;
   // console.log('height: ', height);
-  weight = height * 32 / 10 - 2;
+  weight = height * 32 / 10 - 4;
   height = height / 10;
 
   return {
@@ -113,7 +113,7 @@ const genPlayerProfile = async () => {
   const lastName = await genName.getRandomLastName();
   const overallScore = await genProfileAverage(speed, ballHandling, soccerIntelligence, strength, mentalFortitude, physicalFortitude);
   const aggScore = await parseFloat(overallScore.toFixed(2));
-  const currentTeam = "Janders";
+  const currentTeam = "Sanviago";
 
   let playerProfile = {
     name: {
@@ -155,7 +155,6 @@ const genPlayerProfile = async () => {
       aggScore,
       currentTeam
     });
-    console.log('createdPlayer: ', createdPlayer);
   } catch (error) {
     console.log(error);
   }
