@@ -1,6 +1,7 @@
 'use strict';
 
-const teamStrengths = require("./../data/team_strengths.json");
+// const teamStrengths = require("./../data/team_strengths.json");
+const teamStrengths = require("./../data/team_strengths_2020.json");
 
 function getGoalsScored() {
   let min = Math.ceil(0);
@@ -92,7 +93,7 @@ function genScore(awayTeam, homeTeam) {
     finalHomeScore: finalHomeScore
   };
 
-  console.log('CompletedScore: ', completedScore);
+  // console.log('CompletedScore: ', completedScore);
 
   // console.log("Aventura: ", finalHomeScore);
   // console.log("Hawthorne: ", finalAwayScore);
@@ -114,48 +115,32 @@ function genScore(awayTeam, homeTeam) {
     awayTeamWins++;
   }
 
+  console.log(completedScore);
   return completedScore;
 }
 
-const getTotalsStrongHomeWeakAway = () => {
-  let iterations = 100;
-  for (let i = 0; i < iterations; i++) {
-    genScore("Solston", "Janders");
-  }
-
-  // PRINT AGG RESULTS
-  console.log();
-  console.log("STRONG/WEAK DONE!!!");
-  console.log();
-  console.log("Games played: ", draws + homeTeamWins + awayTeamWins);
-  console.log("----------------------------");
-  console.log("draws: ", draws);
-  // console.log('scoreLessDraws: ', scorelessDraws);
-  console.log("homeTeamWins: ", homeTeamWins);
-  console.log("awayTeamWins: ", awayTeamWins);
-  console.log();
-};
-
-const getTotalsEquallyMatched = () => {
+const gen1000Games = () => {
   let iterations = 1000;
   for (let i = 0; i < iterations; i++) {
-    genScore("Janders", "Aventura");
+    genScore("Westingdon", "Argonia");
   }
 
   // PRINT AGG RESULTS
   console.log();
-  console.log("EQUALLY MATCHED DONE!!!");
-  console.log();
   console.log("Games played: ", draws + homeTeamWins + awayTeamWins);
   console.log("----------------------------");
   console.log("draws: ", draws);
-  // console.log('scoreLessDraws: ', scorelessDraws);
-  console.log("homeTeamWins: ", homeTeamWins);
   console.log("awayTeamWins: ", awayTeamWins);
+  console.log("homeTeamWins: ", homeTeamWins);
   console.log();
+
+  draws = 0;
+  homeTeamWins = 0;
+  awayTeamWins = 0;
+  iterations = 0;
 };
 
-// getTotalsStrongHomeWeakAway();
-// getTotalsEquallyMatched();
+gen1000Games();
 
-genScore("Argonia", "Sanviago");
+// genScore("Solstan", "Argonia");
+gen1000Games("Solstan", "Argonia");
