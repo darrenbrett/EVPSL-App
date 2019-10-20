@@ -64,7 +64,9 @@ exports.getPlayersAggScore = async (ctx) => {
 
 // Get the total agg player score for all teams
 exports.getAllTeamPlayerAggScores = async (ctx) => {
-  let teams = await Team.find();
+  let teams = await Team.find().sort({
+    playersAggScore: -1
+  });
   const teamPlayerScores = teams.map(({
     name,
     playersAggScore
@@ -74,18 +76,24 @@ exports.getAllTeamPlayerAggScores = async (ctx) => {
   return teamPlayerScores;
 };
 
+// Get the total agg player score for all teams
+exports.getAllTeamScores = async (ctx) => {
+  let teams = await Team.find().sort({
+    teamScore: -1
+  });
+  const teamScores = teams.map(({
+    name,
+    teamScore
+  }) => ({
+    [name.location]: teamScore
+  }));
+  return teamScores;
+};
+
 // Get team score - aggPlayerScore + Random Variability
-exports.getTeamScores = async (ctx) => {
-  let teamPlayerScores = await this.getAllTeamPlayerAggScores();
-  console.log('teamPlayerScores');
+exports.getRandomScore = async () => {
   let min = Math.ceil(0);
   max = Math.floor(3);
   let randomVal = Math.floor(Math.random() * (max - min + 1)) + min; // The minimm and maximum are inclusive
-  const teamScores = teamsPlayerScores.map(({
-    name,
-    playersAggScore
-  }) => ({
-    [name.location]: playersAggScore
-  }));
-  return teamPlayerScores;
+  console.log('randomValue: ', randomVal);
 };

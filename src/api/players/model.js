@@ -63,6 +63,9 @@ const PlayerSchema = new Schema({
   },
   aggScore: {
     type: Number
+  },
+  position: {
+    type: String
   }
 });
 

@@ -1,14 +1,14 @@
 [{
     "name": "Andessa",
-    "rating": 6
+    "rating": 3
   },
   {
     "name": "Aventura",
-    "rating": 5
+    "rating": 3
   },
   {
     "name": "Creighton",
-    "rating": 7
+    "rating": 5
   },
   {
     "name": "Hawthorne",
@@ -16,34 +16,34 @@
   },
   {
     "name": "Janders",
-    "rating": 5
+    "rating": 4
   },
   {
     "name": "Larson",
-    "rating": 6
-  },
-  {
-    "name": "Pieska",
-    "rating": 6
-  },
-  {
-    "name": "Rosdon",
     "rating": 5
   },
   {
-    "name": "Solston",
+    "name": "Pieska",
+    "rating": 4
+  },
+  {
+    "name": "Rosdan",
+    "rating": 5
+  },
+  {
+    "name": "Solstan",
     "rating": 8
   },
   {
     "name": "Westingdon",
-    "rating": 7
+    "rating": 1
   },
   {
     "name": "Sanviago",
-    "rating": 8
+    "rating": 7
   },
   {
     "name": "Argonia",
-    "rating": 6
+    "rating": 8
   }
 ]

@@ -40,4 +40,9 @@ router.get('/all-team-player-scores', async ctx => {
   ctx.body = allTeamPlayerScores;
 });
 
+router.get('/team-scores', async ctx => {
+  const teamScores = await controller.getAllTeamScores();
+  ctx.body = teamScores;
+});
+
 module.exports = router.routes();
