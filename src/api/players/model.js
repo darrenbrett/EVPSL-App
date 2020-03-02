@@ -66,6 +66,9 @@ const PlayerSchema = new Schema({
   },
   position: {
     type: String
+  },
+  playStatus: {
+    type: String
   }
 });
 

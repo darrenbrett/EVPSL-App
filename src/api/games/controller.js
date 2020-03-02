@@ -1,4 +1,5 @@
 const Game = require('./model');
+const Player = require('./../players/model');
 
 // Get all games across time
 exports.getAll = async () => {
@@ -96,3 +97,12 @@ exports.getById = async (ctx) => {
   }).lean().exec();
   return user;
 };
+
+exports.getScorersForTeam = async (ctx) => {
+  const { team, totalGoals } = ctx.request.query;
+  if (!team || !totalGoals || ! eligPlayers) return;
+  let eligPlayers = await Player.find({
+    currentTeam: team,
+    playStatus: active
+  });
+} 
